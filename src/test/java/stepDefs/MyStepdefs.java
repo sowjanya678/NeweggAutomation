@@ -6,10 +6,7 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.junit.Assert;
-import pages.HomePage;
-import pages.ProductDetailsPage;
-import pages.SearchResultsPage;
-import pages.ShoppingCartPage;
+import pages.*;
 import util.Browser;
 import util.ResetPassword;
 
@@ -68,4 +65,50 @@ public class MyStepdefs {
         ResetPassword resetPassword = new ResetPassword();
         resetPassword.reset(Browser.getDriver());
     }
+
+    @When("^I login with \"([^\"]*)\" and \"([^\"]*)\"$")
+    public void iLoginWithAnd(String email, String pswd) throws Throwable {
+        HomePage homePage = new HomePage();
+        homePage.clickLoginLink();
+        LoginPage loginPage = new LoginPage();
+        loginPage.login(email,pswd);
+    }
+
+    @When("^I continue checkout from shopping cart$")
+    public void iContinueCheckoutFromShoppingCart() throws Throwable {
+        ShoppingCartPage shoppingCartPage = new ShoppingCartPage();
+        shoppingCartPage.continueCheckout();
+    }
+
+    @And("^I continue to Billing Address$")
+    public void iContinueToBillingAddress() throws Throwable {
+        ShippingAddressPage shippingAddressPage = new ShippingAddressPage();
+        shippingAddressPage.clickContinueBilling();
+    }
+
+    @Then("^I should see level error messages in shipping address page$")
+    public void iShouldSeeLevelErrorMessagesInShippingAddressPage() throws Throwable {
+        ShippingAddressPage shippingAddressPage = new ShippingAddressPage();
+        Assert.assertTrue("First Name required filed error message is not displayed",shippingAddressPage.verifyFirstNameFiledError());
+        Assert.assertTrue("Last Name required filed error message is not displayed",shippingAddressPage.verifyLastNameFiledError());
+        Assert.assertTrue("Zip required filed error message is not displayed",shippingAddressPage.verifyAddressFiledError());
+        Assert.assertTrue("City required filed error message is not displayed",shippingAddressPage.verifyCityFiledError());
+        Assert.assertTrue("Zip required filed error message is not displayed",shippingAddressPage.verifyZipFiledError());
+        Assert.assertTrue("Phone required filed error message is not displayed",shippingAddressPage.verifyPhoneFiledError());
+
+    }
+
+    @When("^I navigate to home page$")
+    public void iNavigateToHomePage() throws Throwable {
+        ShippingAddressPage shippingAddressPage = new ShippingAddressPage();
+        shippingAddressPage.clickOnHeaderLogo();
+    }
+
+    @When("^I should logout successfully$")
+    public void iShouldLogoutSuccessfully() throws Throwable {
+        HomePage homePage = new HomePage();
+        homePage.clickLogOut();
+    }
+
+
 }

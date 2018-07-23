@@ -27,6 +27,9 @@ public class ShoppingCartPage extends Page {
     @FindBy(css = ".price-current strong")
     List<WebElement> productPrice;
 
+    @FindBy(xpath = "//a[@title='Secure Checkout']")
+    WebElement continueSecureCheckout;
+
     String priceAfterUpdate="";
     String priceBeforeUpdate="";
 
@@ -54,6 +57,10 @@ public class ShoppingCartPage extends Page {
 
     public boolean verifyPriceUpdate(){
         return (!priceBeforeUpdate.equalsIgnoreCase(priceAfterUpdate));
+    }
+
+    public void continueCheckout(){
+        continueSecureCheckout.click();
     }
 
 }
